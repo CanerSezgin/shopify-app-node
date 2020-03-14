@@ -9,12 +9,12 @@
 0. Clone this repo
 1. Install **ngrok**  `npm install ngrok -g`
 2. Start **ngrok**  `ngrok http 3000`
-3. Create App on shopify partners dashboard.
--> Apps -> Create App
--> Select Public app
--> Enter App Name _{ Your App Name }_
--> Enter App URL _{ https://YOUR_NGROK_HOST_ADDRESS }_
--> Enter Whitelist _{ https://YOUR_NGROK_HOST_ADDRESS/shopify/callback}_
+3. Create App on shopify partners dashboard. <br>
+-> Apps -> Create App <br>
+-> Select Public app <br>
+-> Enter App Name _{ Your App Name }_ <br>
+-> Enter App URL _{ https://YOUR_NGROK_HOST_ADDRESS }_ <br>
+-> Enter Whitelist _{ https://YOUR_NGROK_HOST_ADDRESS/shopify/callback}_ <br>
 4. Create **.env**
 -> By taking a look at [.env.example](.env.example) file, fill your own `.env` file.
 `SHOPIFY_API_KEY`: can be found under app settings dasboard on shopify partner. <br>
