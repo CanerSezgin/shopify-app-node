@@ -1,0 +1,18 @@
+class ErrorHandler extends Error {
+    /**
+     *
+     * @param {number} statusCode - HTTP Status Codes
+     * @param {string} message - Error Message
+     * @param {boolean} isOperational - Operational errors refer to situations where you understand what happened and the impact of it.
+     */
+    constructor(statusCode, message, isOperational) {
+      super();
+      Error.call(this);
+      Error.captureStackTrace(this);
+      this.statusCode = statusCode;
+      this.message = message;
+      this.isOperational = isOperational;
+    }
+}
+
+module.exports = ErrorHandler

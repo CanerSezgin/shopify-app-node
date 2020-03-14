@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { ErrorHandler } = require('../lib/error');
+const ErrorHandler = require('../lib/errorHandler');
 
 const credentialFields = [
     'SHOPIFY_API_KEY',

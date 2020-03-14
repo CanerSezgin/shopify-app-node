@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { ErrorHandler } = require('../../lib/error');
+const ErrorHandler = require("../../lib/errorHandler");
 const hmacValidator = require("../../lib/hmacValidator");
 
 class ShopifyService {
@@ -48,12 +48,13 @@ class ShopifyService {
     }
 
     // Get Access Token and Scopes && Save
-    const {
-      access_token: accessToken,
-      scope
-    } = await this.getAccessTokenWithScope(code);
-    // TODO: Store accessToken && Scope in your db
-    return { message: "App Successfully Installed", accessToken, scope };
+    try {
+        const { access_token: accessToken, scope} = await this.getAccessTokenWithScope(code);
+        // TODO: Store accessToken && Scope in your db
+        return { message: "App Successfully Installed", accessToken, scope };
+    } catch (error) {
+        throw new ErrorHandler(error.response.status || 400, `Access Token Issue`, true)
+    }
   }
 }
 

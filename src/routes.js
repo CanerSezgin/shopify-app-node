@@ -1,4 +1,4 @@
-const { handleError } = require('./lib/error');
+const handleError = require('./middlewares/error');
 
 const shopifyRoute = require('./components/shopify/shopifyController');
 const checkCridentials = require('./middlewares/checkCridentials');
