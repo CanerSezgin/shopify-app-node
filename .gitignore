@@ -1,5 +1,6 @@
 # Environment Configuration
 .env
+.env.access_tokens
 
 # Dependency directory
 node_modules

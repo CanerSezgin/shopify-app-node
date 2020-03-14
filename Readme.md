@@ -6,7 +6,7 @@
 - If you don’t have one, [create a Development store](https://help.shopify.com/en/partners/dashboard/development-stores#create-a-development-store) where you can install and test your app.
 
 ### Preparation
-0. Clone this repo
+0. Fork this repo
 1. Install **ngrok**  `npm install ngrok -g`
 2. Start **ngrok**  `ngrok http 3000`
 3. Create App on shopify partners dashboard. <br>
