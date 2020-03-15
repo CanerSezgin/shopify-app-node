@@ -5,6 +5,11 @@ class ShopifyAPI {
   constructor(shop, accessToken) {
     this.accessToken = accessToken;
     this.shop = shop;
+    
+    this.client = axios.create({
+        baseURL: `https://${shop}.myshopify.com`,
+        headers: { 'X-Shopify-Access-Token': this.accessToken }
+    })
   }
 
   /**
@@ -13,13 +18,12 @@ class ShopifyAPI {
   async getProducts() {
     try {
         const method = 'get';
-        const url = `https://${this.shop}.myshopify.com/admin/api/2020-01/products.json`
-        const headers = {'X-Shopify-Access-Token': this.accessToken}
-        
-        const response = await axios({ method, url, headers })
+        const url = `/admin/api/2020-01/products.json`
+
+        const response = await this.client({method, url})
         return response.data;
     } catch (error) {
-        throw createShopifyError(error)
+        throw createShopifyError(error, this.shop)
     }
   }
 

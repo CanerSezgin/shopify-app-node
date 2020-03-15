@@ -30,10 +30,10 @@ class AppError extends CustomError {
 }
 
 class ShopifyError extends CustomError {
-  constructor(statusCode, message, shopify) {
+  constructor(statusCode, message, shopify, shop) {
     super(statusCode, message, true);
     this.type = "shopify";
-    this.shopify = {}
+    this.shopify = { shop }
 
     Object.keys(shopify).forEach(key => {
       this.shopify[key] = shopify[key];
