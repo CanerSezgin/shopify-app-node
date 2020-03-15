@@ -14,9 +14,8 @@ route.get("/", async (req, res, next) => {
     });
     const p = await s.getProducts();
     console.log(p);
-    res.status(200).json({ token: "c9985f4bb1f42a514ebda9486f08076a" });
+    res.status(200).json({ p });
   } catch (error) {
-      console.log(" --------- Controller", error)
     next(error);
   }
 });

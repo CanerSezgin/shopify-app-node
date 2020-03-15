@@ -1,22 +1,30 @@
-const { UnknownError, AppError, ShopifyError } = require('../lib/errors'); 
-const { splitShopifyUrl, isValidShopifyUrl } = require('../lib/helpers');
+const { UnknownError, AppError, ShopifyError } = require("../lib/errors");
+const { isShopifyError, createShopifyError } = require("../lib/helpers");
 
-module.exports = async (err, req, res, next) => {
-  // AppError
-  if(err instanceof AppError) {
-    return res.status(err.statusCode).json(err);
+const getError = err => {
+  // AppError && ShopifyError
+  if (err instanceof AppError || err instanceof ShopifyError) {
+    return err;
   }
 
-  // Shopify Error
-  if(err.isAxiosError && err.response.config && isValidShopifyUrl(err.response.config.url)) {
-    const { status, config } = err.response;
-    const { url, method } = config;
-    const message = err.response.data.errors;
-    return res.status(status).json(new ShopifyError(status, message, { method, ...splitShopifyUrl(url)}));
-  }
+  // Unhandled Shopify Error
+  /* if (isShopifyError(err)) {
+    return createShopifyError(err);
+  } */
 
   // Unknown - NonOperational Error
   const status = err.status || err.response.status || 400;
-  return res.status(status).json(new UnknownError(status, error.message));
+  return new UnknownError(status, error.message);
 };
 
+module.exports = async (err, req, res, next) => {
+  const error = getError(err);
+
+  if (process.env.NODE_ENV === "development") {
+    console.log("----------------------------");
+    console.log(error);
+    console.log("----------------------------");
+  }
+
+  res.status(error.statusCode).json(error);
+};
