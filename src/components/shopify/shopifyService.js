@@ -1,5 +1,5 @@
 const axios = require("axios");
-const ErrorHandler = require("../../lib/errorHandler");
+const { AppError } = require("../../lib/errors");
 const hmacValidator = require("../../lib/hmacValidator");
 
 class ShopifyService {
@@ -38,13 +38,13 @@ class ShopifyService {
     const { SHOPIFY_API_SECRET } = this.credential;
     const { shop, hmac, code } = query;
     if (!shop && !hmac && !code) {
-      throw new ErrorHandler(400, "Wrong or Missing Query", true);
+      throw new AppError(400, "Wrong or Missing Query");
     }
 
     // HMAC Validation
     const hashEquals = hmacValidator(query, hmac, SHOPIFY_API_SECRET);
     if (!hashEquals) {
-      throw new ErrorHandler(400, "HMAC validation failed", true);
+      throw new AppError(400, "HMAC validation failed");
     }
 
     // Get Access Token and Scopes && Save
@@ -53,7 +53,7 @@ class ShopifyService {
         // TODO: Store accessToken && Scope in your db
         return { message: "App Successfully Installed", accessToken, scope };
     } catch (error) {
-        throw new ErrorHandler(error.response.status || 400, `Access Token Issue`, true)
+        throw new AppError(error.response.status || 400, `Access Token Issue`)
     }
   }
 }

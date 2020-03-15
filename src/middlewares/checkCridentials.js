@@ -1,5 +1,5 @@
 require("dotenv").config();
-const ErrorHandler = require('../lib/errorHandler');
+const { AppError } = require('../lib/errors');
 
 const credentialFields = [
     'SHOPIFY_API_KEY',
@@ -22,11 +22,11 @@ class Credential {
 const credential = new Credential(process.env)
 module.exports = (req, res, next) => {
     if(credential.anyMissingValue()){
-        throw new ErrorHandler(400, {
+        throw new AppError(400, {
             message: 'Missing Credentials',
             details: 'You need to set these under process.env',
             fields: credentialFields
-        }, true);
+        });
     }
     console.log("next -> credential")
     res.locals.credential = credential
